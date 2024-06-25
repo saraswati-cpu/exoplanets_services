@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"exoplanets_services/config"
+	"fmt"
+
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
-	fmt.Println("welcome to exoplanets_services")
+	configg := config.NewConfig()
+	config.PooledConnectDB(configg)
+	r := gin.New()
+	tcp_port := configg.PORT
+	address := fmt.Sprintf(":%v", tcp_port)
+	r.Run(address) // listen and serve on 0.0.0.0:8000
 }
